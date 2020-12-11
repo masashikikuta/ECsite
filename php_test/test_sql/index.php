@@ -79,6 +79,7 @@ if(isset($_GET["name"])){
         else if (password_verify($_POST['password'], $row['Login_Pass'])) {
             session_regenerate_id(true); //session_idを新しく生成し、置き換える
             $_SESSION['USER'] = $row['User_Name'];
+            $_SESSION['RIGHT'] =$row['User_Right'];
             $_SESSION['CART'] = array();
             echo 'ログインしました';
             header("Location: product_list.php");

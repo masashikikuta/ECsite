@@ -65,33 +65,101 @@
 /*---------------↓メイン-----------------*/
 
 .container {
-	width:70%;
-	background:#ddd;
-	margin:0 auto;
+	width:100%;
+	display:flex;
 }
 
 
 /*---------------↓左-----------------*/
 
-
-
-.product {
-	display:block;
-	width:500px;
-	height:160px;
-	background:white;
-	border-radius:8px;
-	margin:0px auto;
-	margin-bottom:10px;
-	padding:20px;
-	text-decoration:none;
+.left-content {
+	width:80%;
+	padding:20px 40px;
+	display:flex;
+	flex-wrap:wrap;
+	box-sizing:border-box;
+	align-content:flex-start;
 }
 
-.product-image {
-	width:150px;
-	height:150px;
-	float:left;
+.search-word {
+	width:100%;
+	font-size:small;
+	display:flex;
+}
+
+.search-word p {
 	margin-right:20px;
 }
 
+.search-result {
+	width:100%;
+	min-height:300px;
+	margin-top:10px;
+	display:flex;
+	flex-wrap:wrap;
+}
 
+.search-result-item {
+	display:flex;
+	width:25%;
+	flex-direction:column;
+	box-sizing:border-box;
+	padding:30px;
+	margin-bottom:25px;
+}
+
+.search-result-image {
+	width:100%;
+	margin-bottom:5px;
+}
+
+
+/*---------------↓右-----------------*/
+
+.right-content {
+	width:20%;
+	background:#e9edef;
+	display:flex;
+	padding:20px 0px;
+	flex-direction:column;
+	border-left:1px solid gray;
+}
+
+.pickup-category {
+	width:80%;
+	background:white;
+	padding:10px;
+	border-radius:8px;
+	margin:0 auto;
+	border:1px solid gray;
+}
+
+.pickup-product {
+	width:80%;
+	background:white;
+	padding:10px;
+	border-radius:8px;
+	margin:0 auto;
+	margin-top:10px;
+	border:1px solid gray;
+}
+
+.pickup {
+	width:80%;
+	margin:0 auto;
+	margin-top:20px;
+	box-sizing:border-box;
+	padding:10px;
+	text-align:center;
+	border-bottom:1px solid gray;
+}
+
+.pickup-image {
+	width:100px;
+	height:100px;
+}
+
+.pickup a{
+	display:block;
+	font-weight:bold;
+}

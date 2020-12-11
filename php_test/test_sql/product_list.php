@@ -4,10 +4,25 @@ require "pdo_connect.php";
 
 session_start();
 
-$prepare = $dbh->prepare("SELECT * FROM Product_Info");
+$prepare = $dbh->prepare("SELECT * FROM Product_Info LIMIT 10");
 $prepare->execute();
-
 $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+
+$prepare = $dbh->prepare("SELECT * FROM Product_Info LIMIT 8");
+$prepare->execute();
+$pickup = $prepare->fetchAll(PDO::FETCH_ASSOC);
+
+$prepare = $dbh->prepare("SELECT * FROM Product_Info WHERE Product_Category='食品'");
+$prepare->execute();
+$food = $prepare->fetchAll(PDO::FETCH_ASSOC);
+
+$prepare = $dbh->prepare("SELECT * FROM Product_Info WHERE Product_Category='文房具'");
+$prepare->execute();
+$stationery = $prepare->fetchAll(PDO::FETCH_ASSOC);
+
+$prepare = $dbh->prepare("SELECT Product_Category FROM Product_Info GROUP BY Product_Category");
+$prepare->execute();
+$category = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -15,26 +30,22 @@ $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
 	<title>商品一覧</title>
+	<link href="js/slick-theme.css" rel="stylesheet" type="text/css">
+	<link href="js/slick.css" rel="stylesheet" type="text/css">
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="js/slick.min.js"></script>
+	<script type="text/javascript" src="js/slide.js"></script>
+
 	<link rel="stylesheet" href="css/common.css">
 	<link rel="stylesheet" href="css/popup.css">
-	<link rel="stylesheet" href="css/nav.css">
 	<link rel="stylesheet" href="css/style.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
 </head>
 <body>
 	<?php require 'nav.php'; ?>
 
-	<div class="search-area">
-    		<form action="search.php" method="post" class="form-search">
-    			<select name="" class="category-select">
-    				<option value="">カテゴリ</option>
-    				<option value="">食品</option>
-    				<option value="">文房具</option>
-    			</select>
-        		<input type="text" class="search" name="search">
-        		<input type="submit" value="検索" class="search-submit"><br>
-        	</form>
-	</div>
+	<?php require 'search_area.php'; ?>
+
 
 	<div class="header">
 
@@ -43,8 +54,34 @@ $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
 	<div class="container">
 
 		<div class="left-content">
+			<div class="left-width">
+
+			<div class="slide-category">
+				<h5>食品の商品</h5>
+				<ul class="slider">
+				<?php for($i=0; $i<count($food); $i++): ?>
+                    <li class="slide-content"><a href="product.php?name=<?php echo $food[$i]["Product_ID"] ?>">
+                        <img src="img/<?php echo $food[$i]["Product_ID"] ?>.png" class="replace-image">
+                        <div class="item"><?php echo $food[$i]["Product_Name"] ?></div>
+                    </a></li>
+                <?php endfor ?>
+            	</ul>
+			</div>
+
+			<div class="slide-category">
+				<h5>文房具の商品</h5>
+				<ul class="slider">
+				<?php for($i=0; $i<count($stationery); $i++): ?>
+                    <li class="slide-content"><a href="product.php?name=<?php echo $stationery[$i]["Product_ID"] ?>">
+                        <img src="img/<?php echo $stationery[$i]["Product_ID"] ?>.png" class="replace-image">
+                        <div class="item"><?php echo $stationery[$i]["Product_Name"] ?></div>
+                    </a></li>
+                <?php endfor ?>
+            	</ul>
+			</div>
+
     		<?php for($i=0; $i<count($result); $i++): ?>
-            	<form action="cart.php?name=add" method="post" class="test0">
+            	<form action="cart.php?name=add" method="post" class="products">
         			<div class="product">
         				<a href="product.php?name=<?php echo $result[$i]["Product_ID"] ?>"><img src="<?php echo $result[$i]["Product_Image"] ?>" class="product-image"></a>
         				<h3><a href="product.php?name=<?php echo $result[$i]["Product_ID"] ?>" class="item-name"><?php echo $result[$i]["Product_Name"] ?></a></h3>
@@ -57,24 +94,26 @@ $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
         			</div>
         		</form>
         	<?php endfor ?>
+        	</div>
         </div>
 
         <div class="right-content">
 			<div class=pickup-category>
 				<h5>おすすめのカテゴリ</h5>
 				<ul>
-					<li><a href="">食品</a></li>
-					<li><a href="">文房具</a></li>
+					<?php for($i=0; $i<count($category); $i++): ?>
+    					<li><a href="search.php?c=<?php echo $category[$i]["Product_Category"] ?>"><?php echo $category[$i]["Product_Category"] ?></a></li>
+    				<?php endfor; ?>
 				</ul>
 			</div>
 			<div class="pickup-product">
 				<h5>おすすめの商品</h5>
-				<?php for($i=0; $i<count($result); $i++): ?>
+				<?php for($i=0; $i<count($pickup); $i++): ?>
 					<div class="pickup">
-						<a href="product.php?name=<?php echo $result[$i]["Product_ID"] ?>">
-						<img src="<?php echo $result[$i]["Product_Image"] ?>" class="pickup-image">
-						<a href=""><?php echo $result[$i]["Product_Name"] ?></a>
-						<div class="pickup-price"><?php echo $result[$i]["Product_Price"] ?>円</div>
+						<a href="product.php?name=<?php echo $pickup[$i]["Product_ID"] ?>">
+						<img src="<?php echo $pickup[$i]["Product_Image"] ?>" class="pickup-image">
+						<a href=""><?php echo $pickup[$i]["Product_Name"] ?></a>
+						<div class="pickup-price"><?php echo $pickup[$i]["Product_Price"] ?>円</div>
 						</a>
 					</div>
 				<?php endfor ?>
@@ -83,13 +122,16 @@ $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
     </div>
 
-	<?php if($_GET["name"] == "added"): ?>
+	<?php if(@$_GET["name"] == "added"): ?>
         <div class="popup">
     		カートに商品を追加しました
+    		<a href="cart.php" class="go-cart">カートを見る</a>
         </div>
     <?php endif ?>
 
-    <script src="js/popup.js"></script>
+    <?php require 'footer.php'; ?>
 
+    <script src="js/popup.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
 </body>
 </html>

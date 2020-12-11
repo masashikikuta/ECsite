@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="css/nav.css">
+
 <div class="nav">
 		<a href="product_list.php" class="logo">
 			ECサイト
@@ -19,6 +21,9 @@
     			<?php endif; ?>
 				<ul>
 					<li><a href="">アカウント</a></li>
+					<?php if(@$_SESSION["RIGHT"] == "admin"): ?>
+						<li><a href="admin/index.php">管理者ページ</a></li>
+					<?php endif; ?>
 					<li><a href="logout.php">ログアウト</a></li>
 				</ul>
 			</li>

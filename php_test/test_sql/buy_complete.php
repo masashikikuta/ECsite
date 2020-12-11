@@ -23,14 +23,23 @@ $_SESSION["CART"] = null;
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>購入完了</title>
-<link rel="stylesheet" href="shop.css">
+    <meta charset="utf-8">
+    <title>購入完了</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/buy_complete.css">
 </head>
 <body>
-	<h1>購入ありがとうございました</h1>
-	<div>
-		<a href="product_list.php">トップに戻る</a>
-	</div>
+	<?php require "nav.php"; ?>
+	<?php require 'search_area.php'; ?>
+
+	<div class="container">
+    	<h1>購入ありがとうございました</h1>
+    	<div>
+    		<a href="product_list.php">トップに戻る</a>
+    	</div>
+    </div>
+
+	<?php require "footer.php"; ?>
+	<script src="js/common.js"></script>
 </body>
 </html>
