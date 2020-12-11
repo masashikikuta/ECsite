@@ -10,7 +10,7 @@ if(empty($_GET["search"]) && empty($_GET["category"])){
 }else if(empty($_GET["category"])){
     $prepare = $dbh->prepare("SELECT * FROM Product_Info WHERE Product_Name LIKE '%".$_GET["search"]."%'");
 }else {
-    $prepare = $dbh->prepare("SELECT * FROM Product_Info WHERE Product_Name LIKE '%".$_GET["search"]."%' AND Product_Category LIKE '%".$_POST["category"]."%' ");
+    $prepare = $dbh->prepare("SELECT * FROM Product_Info WHERE Product_Name LIKE '%".$_GET["search"]."%' AND Product_Category LIKE '%".$_GET["category"]."%' ");
 }
 
 $prepare->execute();
