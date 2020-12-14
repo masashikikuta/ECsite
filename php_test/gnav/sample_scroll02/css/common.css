@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+.msg{
+  color: #333;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.box-inner{
+  max-width: 700px;
+  margin: 250px auto;
+  padding: 0 40px;
+}
+
+.box{
+  width: 200px;
+  height: 200px;
+  background-color: orange;
+  margin: 50px auto 0;
+}
+
+.fade-in {
+  opacity: 0;
+  transition-duration: 500ms;
+  transition-property: opacity, transform;
+}
+
+.fade-in-up {
+  transform: translate(0, 50px);
+}
+
+.fade-in-down {
+  transform: translate(0, -50px);
+}
+
+.fade-in-left {
+  transform: translate(-50px, 0);
+}
+
+.fade-in-right {
+  transform: translate(50px, 0);
+}
+
+.scroll-in {
+  opacity: 1;
+  transform: translate(0, 0);
+}
