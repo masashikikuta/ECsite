@@ -2,7 +2,6 @@
 
 require "pdo_connect.php";
 $productID = $_GET["name"];
-// echo $productID;
 
 $prepare = $dbh->prepare("SELECT * FROM Product_Info WHERE Product_ID = ?");
 $prepare->execute([$productID]);
@@ -11,6 +10,11 @@ $result = $prepare->fetch(PDO::FETCH_ASSOC);
 $prepare = $dbh->prepare("SELECT * FROM Product_Info WHERE Product_Category=?");
 $prepare->execute([$result["Product_Category"]]);
 $sameCategory = $prepare->fetchAll(PDO::FETCH_ASSOC);
+
+$access = $result["Product_Access"];
+$access ++;
+$prepare = $dbh->prepare("UPDATE Product_Info SET Product_Access=? WHERE Product_ID=?");
+$prepare->execute([$access,$productID]);
 
 ?>
 

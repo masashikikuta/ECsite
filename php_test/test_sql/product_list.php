@@ -8,7 +8,7 @@ $prepare = $dbh->prepare("SELECT * FROM Product_Info LIMIT 10");
 $prepare->execute();
 $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
-$prepare = $dbh->prepare("SELECT * FROM Product_Info LIMIT 8");
+$prepare = $dbh->prepare("SELECT * FROM Product_Info ORDER BY Product_Access DESC LIMIT 8");
 $prepare->execute();
 $pickup = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
@@ -23,6 +23,10 @@ $stationery = $prepare->fetchAll(PDO::FETCH_ASSOC);
 $prepare = $dbh->prepare("SELECT Product_Category FROM Product_Info GROUP BY Product_Category");
 $prepare->execute();
 $category = $prepare->fetchAll(PDO::FETCH_ASSOC);
+
+$prepare = $dbh->prepare("SELECT Product_Category,SUM(Product_Access) FROM Product_Info GROUP BY Product_Category ORDER BY SUM(Product_Access) DESC");
+$prepare->execute();
+$pickupCategory = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -48,7 +52,12 @@ $category = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
 
 	<div class="header">
-
+		<ul class="header-slider">
+			<li><a href="#">sample</a></li>
+			<li><a href="#">sample</a></li>
+			<li><a href="#">sample</a></li>
+			<li><a href="#">sample</a></li>
+		</ul>
 	</div>
 
 	<div class="container">
@@ -101,13 +110,13 @@ $category = $prepare->fetchAll(PDO::FETCH_ASSOC);
 			<div class=pickup-category>
 				<h5>おすすめのカテゴリ</h5>
 				<ul>
-					<?php for($i=0; $i<count($category); $i++): ?>
-    					<li><a href="search.php?c=<?php echo $category[$i]["Product_Category"] ?>"><?php echo $category[$i]["Product_Category"] ?></a></li>
+					<?php for($i=0; $i<count($pickupCategory); $i++): ?>
+    					<li><a href="search.php?c=<?php echo $pickupCategory[$i]["Product_Category"] ?>"><?php echo $pickupCategory[$i]["Product_Category"] ?></a></li>
     				<?php endfor; ?>
 				</ul>
 			</div>
 			<div class="pickup-product">
-				<h5>おすすめの商品</h5>
+				<h5>人気の商品</h5>
 				<?php for($i=0; $i<count($pickup); $i++): ?>
 					<div class="pickup">
 						<a href="product.php?name=<?php echo $pickup[$i]["Product_ID"] ?>">
