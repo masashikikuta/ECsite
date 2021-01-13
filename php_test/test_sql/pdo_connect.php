@@ -1,6 +1,6 @@
 <?php
 
-$dsn = "mysql:dbname=node_test;host=127.0.0.1";
+$dsn = "mysql:dbname=test;host=127.0.0.1;charset=utf8";
 $user = "root";
 $password = "";
 

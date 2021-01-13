@@ -1,5 +1,6 @@
 <?php
 require 'pdo_connect.php';
+require "common.php";
 
 function h($s){
     return htmlspecialchars($s, ENT_QUOTES, 'utf-8');
@@ -9,9 +10,6 @@ session_start();
 //ログイン済みの場合
 if (isset($_SESSION['USER'])) {
     header("Location: product_list.php");
-    echo 'ようこそ' .  h($_SESSION['USER']) . "さん<br>";
-    echo "<a href='logout.php'>ログアウトはこちら。</a>";
-    exit;
 }
 ?>
 
@@ -79,8 +77,10 @@ if(isset($_GET["name"])){
         else if (password_verify($_POST['password'], $row['Login_Pass'])) {
             session_regenerate_id(true); //session_idを新しく生成し、置き換える
             $_SESSION['USER'] = $row['User_Name'];
+            $_SESSION['ID'] = $row['User_ID'];
             $_SESSION['RIGHT'] =$row['User_Right'];
             $_SESSION['CART'] = array();
+            $_SESSION["TOKEN"] = get_csrf_token();
             echo 'ログインしました';
             header("Location: product_list.php");
         } else {
@@ -109,25 +109,12 @@ if(isset($_GET["name"])){
                     <label for="password">パスワード</label>
                     <input type="password" name="password" placeholder="パスワード">
                     <button type="submit" class="submit">ログイン</button>
-                    <a href="" class="reset">パスワードを忘れた場合</a>
+                    <a href="pass_reset.php" class="reset">パスワードを忘れた場合</a>
                     <a href="signUp_page.php" class="create">アカウントを作成</a>
                 </form>
             </div>
 		</div>
 	</div>
-
-
-<!--     <h1>初めての方はこちら</h1>
-    <form action="index.php?name=signUp" method="post">
-    	<label for="userName">ユーザー名</label>
-        <input type="text" name="userName">
-        <label for="email">email</label>
-        <input type="email" name="email">
-        <label for="password">password</label>
-        <input type="password" name="password">
-        <button type="submit">Sign Up</button>
-        <p>※パスワードは半角英数字をそれぞれ１文字以上含んだ、８文字以上で設定してください。</p>
-    </form> -->
 
 </body>
 </html>

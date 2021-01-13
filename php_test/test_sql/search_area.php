@@ -6,6 +6,8 @@ $category = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
+	<link rel="stylesheet" href="css/search.css">
+
 	<div class="search-area">
     		<form action="search.php" method="get" class="form-search">
     			<select name="category" class="category-select">

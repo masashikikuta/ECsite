@@ -20,7 +20,7 @@ try {
     $stmt = $dbh->prepare("insert into User_Info(Email_Address, Login_Pass) value(?, ?)");
     $stmt->execute([$email, $password]);
     echo '登録完了';
-}catch(\Exception $e){
+}catch(Exception $e){
     echo '登録済みのメールアドレスです。';
 }
 

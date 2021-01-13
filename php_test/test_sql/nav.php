@@ -19,13 +19,15 @@
     			<?php else: ?>
     				<a href="index.php">ログイン</a>
     			<?php endif; ?>
+    			<?php if(@isset($_SESSION["ID"])): ?>
 				<ul>
-					<li><a href="">アカウント</a></li>
+					<li><a href="account.php">アカウント</a></li>
 					<?php if(@$_SESSION["RIGHT"] == "admin"): ?>
 						<li><a href="admin/index.php">管理者ページ</a></li>
 					<?php endif; ?>
 					<li><a href="logout.php">ログアウト</a></li>
 				</ul>
+				<?php endif; ?>
 			</li>
 		</ul>
 

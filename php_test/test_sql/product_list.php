@@ -34,6 +34,7 @@ $pickupCategory = $prepare->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
 	<title>商品一覧</title>
+	<meta charset="UTF-8">
 	<link href="js/slick-theme.css" rel="stylesheet" type="text/css">
 	<link href="js/slick.css" rel="stylesheet" type="text/css">
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>

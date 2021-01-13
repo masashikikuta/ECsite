@@ -1,6 +1,7 @@
 <?php
 
 require "pdo_connect.php";
+session_start();
 $productID = $_GET["name"];
 
 $prepare = $dbh->prepare("SELECT * FROM Product_Info WHERE Product_ID = ?");
